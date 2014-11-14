@@ -3,19 +3,10 @@
 namespace MVPDesign\WordpressInstaller;
 
 use Composer\Script\Event;
+use MVPDesign\WordpressInstaller\Config;
 
 class Magic
 {
-	public static $KEYS = array(
-		'AUTH_KEY',
-		'SECURE_AUTH_KEY',
-		'LOGGED_IN_KEY',
-		'NONCE_KEY',
-		'AUTH_SALT',
-		'SECURE_AUTH_SALT',
-		'LOGGED_IN_SALT',
-		'NONCE_SALT'
-	);
 
 	public static function happens(Event $event)
 	{
@@ -29,35 +20,40 @@ class Magic
 
 	public static function askQuestions($io)
 	{
-		$generate_salts = $io->askConfirmation('<info>Generate salts?</info> [<comment>Y,n</comment>]?', true);
-		$salts = array_map(function($key) {
-			return sprintf("%s='%s'", $key, Magic::generateSalt());
-		}, self::$KEYS);
+
+		// if ($generate_salts) {
+		// 	$salts = array_map(function($key) {
+		// 		return sprintf("%s='%s'", $key, Magic::generateSalt());
+		// 	}, self::$KEYS);
+		// }
 
 		$db_name     = $io->ask('Database Name?');
 		$db_user     = $io->ask('Database User?');
 		$db_password = $io->ask('Database Password?');
 		$db_host     = $io->ask('Database Host?');
 		$wp_env      = $io->askConfirmation('<info>What is the environment</info> [<comment>development</comment>]?', 'development');
+		$generate_salts = $io->askConfirmation('<info>Generate salts?</info> [<comment>Y,n</comment>]?', true);
 
-		$info              = new Info;
-		$info->DB_NAME     = $db_name;
-		$info->DB_USER     = $db_user;
-		$info->DB_PASSWORD = $db_password;
-		$info->DB_HOST     = $db_host;
-		$info->WP_ENV      = $wp_env;
-		$info->salts       = $salts;
+		$config = new Config;
 
-		return $info;
+		$config->setDatabaseName($db_name);
+		$config->setDatabaseUser($db_user);
+		$config->setDatabasePassword($db_password);
+		$config->setDatabaseHost($db_host);
+		$config->setEnvironment($wp_env);
+		$config->setSalts($salts);
+
+		return $config;
 	}
 
-	public static function createEnvironment($data, $io)
+	public static function createEnvironment(Config $config, $io)
 	{
 		$root = dirname(dirname(dirname(__DIR__)));
 		$env_file = "{$root}/.env";
 
 		if (copy("{$root}/.env.example", $env_file)) {
-		    file_put_contents($env_file, implode($data->salts, "\n"), FILE_APPEND | LOCK_EX);
+		    file_put_contents($env_file, implode($config->salts(), "\n"), FILE_APPEND | LOCK_EX);
+
 		} else {
 		    $io->write("<error>An error occured while copying your .env file</error>");
 		   	return 1;

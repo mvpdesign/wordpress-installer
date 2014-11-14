@@ -4,64 +4,102 @@ namespace MVPDesign\WordpressInstaller;
 
 class Config
 {
+	private $databaseName;
+	private $databaseUser;
+	private $databasePassword;
+	private $databaseHost;
+	private $environment;
+
+	private $salts = array(
+		'AUTH_KEY',
+		'SECURE_AUTH_KEY',
+		'LOGGED_IN_KEY',
+		'NONCE_KEY',
+		'AUTH_SALT',
+		'SECURE_AUTH_SALT',
+		'LOGGED_IN_SALT',
+		'NONCE_SALT'
+	);
 
     public function databaseName()
     {
-        // TODO: write logic here
+        return $this->databaseName;
     }
 
-    public function setDatabaseName($argument1)
+    public function setDatabaseName($databaseName)
     {
-        // TODO: write logic here
+        $this->databaseName = $databaseName;
     }
 
     public function databaseUser()
     {
-        // TODO: write logic here
+        return $this->databaseUser;
     }
 
-    public function setDatabaseUser($argument1)
+    public function setDatabaseUser($databaseUser)
     {
-        // TODO: write logic here
+        $this->databaseUser = $databaseUser;
     }
 
     public function databasePassword()
     {
-        // TODO: write logic here
+        return $this->databasePassword;
     }
 
-    public function setDatabasePassword($argument1)
+    public function setDatabasePassword($databasePassword)
     {
-        // TODO: write logic here
+        $this->databasePassword = $databasePassword;
     }
 
     public function databaseHost()
     {
-        // TODO: write logic here
+        return $this->databaseHost;
     }
 
-    public function setDatabaseHost($argument1)
+    public function setDatabaseHost($databaseHost)
     {
-        // TODO: write logic here
+        $this->databaseHost = $databaseHost;
     }
 
     public function environment()
     {
-        // TODO: write logic here
+        return $this->environment;
     }
 
-    public function setEnvironment($argument1)
+    public function setEnvironment($environment)
     {
-        // TODO: write logic here
+        $this->environment = $environment;
     }
 
-    public function salts()
+    public function salt($key)
     {
-        // TODO: write logic here
+        return $this->salts[$key];
     }
 
-    public function setSalts($argument1)
+    public function setSalt($key, $value)
     {
-        // TODO: write logic here
+        $this->salts[$key] = $value;
+    }
+
+    public function getSalts()
+    {
+    	return $this->salts;
+    }
+
+    public function generate()
+    {
+    	$config = array(
+			'DB_NAME'     => $this->databaseName(),
+			'DB_USER'     => $this->databaseUser(),
+			'DB_PASSWORD' => $this->databasePassword(),
+			'DB_HOST'     => $this->databaseHost(),
+			'WP_ENV'      => $this->environment()
+    	);
+
+    	foreach($config->getSalts() as $key => $value) {
+    		$config[$key] => $value;
+    	}
+
+    	return $config;
     }
 }
