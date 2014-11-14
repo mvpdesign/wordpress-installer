@@ -26,6 +26,5 @@
         "psr-4": {
             "MVPDesign\\WordpressInstaller": ""
         }
-    },
-    "target-dir": "MVPDesign/WordpressInstaller"
+    }
 }
