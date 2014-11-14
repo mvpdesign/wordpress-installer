@@ -21,6 +21,13 @@ class MagicSpec extends ObjectBehavior
         $this->shouldHaveType('MVPDesign\WordpressInstaller\Magic');
     }
 
+
+    /*
+     * Extra Salty generation
+     * 
+     * @method generateSalt
+     */
+
     function it_should_generate_a_salt()
     {
         $this->generateSalt()->shouldBeString();
