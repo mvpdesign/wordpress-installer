@@ -4,22 +4,21 @@ namespace MVPDesign\WordpressInstaller;
 
 class Config
 {
-	private $databaseName;
-	private $databaseUser;
-	private $databasePassword;
-	private $databaseHost;
-	private $environment;
-
-	private $salts = array(
-		'AUTH_KEY',
-		'SECURE_AUTH_KEY',
-		'LOGGED_IN_KEY',
-		'NONCE_KEY',
-		'AUTH_SALT',
-		'SECURE_AUTH_SALT',
-		'LOGGED_IN_SALT',
-		'NONCE_SALT'
-	);
+    private $databaseName;
+    private $databaseUser;
+    private $databasePassword;
+    private $databaseHost;
+    private $environment;
+    private $salts = array(
+        'AUTH_KEY' => null,
+        'SECURE_AUTH_KEY' => null,
+        'LOGGED_IN_KEY' => null,
+        'NONCE_KEY' => null,
+        'AUTH_SALT' => null,
+        'SECURE_AUTH_SALT' => null,
+        'LOGGED_IN_SALT' => null,
+        'NONCE_SALT' => null
+    );
 
     public function databaseName()
     {
@@ -73,33 +72,41 @@ class Config
 
     public function salt($key)
     {
+        if ( ! array_key_exists($key, $this->salts)) {
+            return false;
+        }
+
         return $this->salts[$key];
     }
 
     public function setSalt($key, $value)
     {
+        if ( ! array_key_exists($key, $this->salts)) {
+            return false;
+        }
+
         $this->salts[$key] = $value;
     }
 
-    public function getSalts()
+    public function salts()
     {
-    	return $this->salts;
+        return $this->salts;
     }
 
     public function generate()
     {
-    	$config = array(
-			'DB_NAME'     => $this->databaseName(),
-			'DB_USER'     => $this->databaseUser(),
-			'DB_PASSWORD' => $this->databasePassword(),
-			'DB_HOST'     => $this->databaseHost(),
-			'WP_ENV'      => $this->environment()
-    	);
+        $config = array(
+            'DB_NAME'     => $this->databaseName(),
+            'DB_USER'     => $this->databaseUser(),
+            'DB_PASSWORD' => $this->databasePassword(),
+            'DB_HOST'     => $this->databaseHost(),
+            'WP_ENV'      => $this->environment()
+        );
 
-    	foreach($config->getSalts() as $key => $value) {
-    		$config[$key] => $value;
-    	}
+        foreach ($this->salts() as $key => $value) {
+            $config[$key] = $value;
+        }
 
-    	return $config;
+        return $config;
     }
 }

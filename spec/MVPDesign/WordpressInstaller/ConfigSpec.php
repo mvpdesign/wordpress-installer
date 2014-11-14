@@ -83,7 +83,7 @@ class ConfigSpec extends ObjectBehavior
         $this->salts()->shouldBeArray();
     }
 
-    public function it_should_set_salts(Magic $magician)
+    public function it_should_set_a_salt()
     {
         $this->setSalt('AUTH_KEY', 'iAmAreallyRandomSalt');
 
@@ -95,5 +95,10 @@ class ConfigSpec extends ObjectBehavior
         $this->setSalt('TEST', 'iAmAreallyRandomSalt');
 
         $this->salt('TEST')->shouldEqual(false);
+    }
+
+    public function it_should_generate_an_array()
+    {
+        $this->generate()->shouldBeArray();
     }
 }
