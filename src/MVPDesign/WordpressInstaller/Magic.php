@@ -20,13 +20,6 @@ class Magic
 
 	public static function askQuestions($io)
 	{
-
-		// if ($generate_salts) {
-		// 	$salts = array_map(function($key) {
-		// 		return sprintf("%s='%s'", $key, Magic::generateSalt());
-		// 	}, self::$KEYS);
-		// }
-
 		$db_name     = $io->ask('Database Name?');
 		$db_user     = $io->ask('Database User?');
 		$db_password = $io->ask('Database Password?');
@@ -34,14 +27,15 @@ class Magic
 		$wp_env      = $io->askConfirmation('<info>What is the environment</info> [<comment>development</comment>]?', 'development');
 		$generate_salts = $io->askConfirmation('<info>Generate salts?</info> [<comment>Y,n</comment>]?', true);
 
-		$config = new Config;
-
-		$config->setDatabaseName($db_name);
+        $config = new Config;
+        $config->setDatabaseName($db_name);
 		$config->setDatabaseUser($db_user);
 		$config->setDatabasePassword($db_password);
 		$config->setDatabaseHost($db_host);
 		$config->setEnvironment($wp_env);
-		$config->setSalts($salts);
+        foreach($config->salts() as $salt_key => $salt_value){
+            $config->setSalt($salt_key, Magic::generateSalt());
+        }
 
 		return $config;
 	}
@@ -52,7 +46,7 @@ class Magic
 		$env_file = "{$root}/.env";
 
 		if (copy("{$root}/.env.example", $env_file)) {
-		    file_put_contents($env_file, implode($config->salts(), "\n"), FILE_APPEND | LOCK_EX);
+		    file_put_contents($env_file, implode($config->generate(), "\n"), FILE_APPEND | LOCK_EX);
 
 		} else {
 		    $io->write("<error>An error occured while copying your .env file</error>");
@@ -74,13 +68,4 @@ class Magic
 
 		return $salt;
 	}
-}
-
-class Info {
-	public $DB_NAME;
-	public $DB_USER;
-	public $DB_PASSWORD;
-	public $DB_HOST;
-	public $WP_ENV;
-	public $salts;
 }
