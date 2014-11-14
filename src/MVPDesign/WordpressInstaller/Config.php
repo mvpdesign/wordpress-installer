@@ -9,6 +9,8 @@ class Config
     private $databasePassword;
     private $databaseHost;
     private $environment;
+    private $wordpressHome;
+    private $wordpressSiteUrl;
     private $salts = array(
         'AUTH_KEY' => null,
         'SECURE_AUTH_KEY' => null,
@@ -68,6 +70,26 @@ class Config
     public function setEnvironment($environment)
     {
         $this->environment = $environment;
+    }
+
+    public function wordpressHome()
+    {
+        return $this->wordpressHome;
+    }
+
+    public function setWordpressHome($wordpressHome)
+    {
+        $this->wordpressHome = $wordpressHome;
+    }
+
+    public function wordpressSiteUrl()
+    {
+        return $this->wordpressSiteUrl;
+    }
+
+    public function setWordpressSiteUrl($wordpressSiteUrl)
+    {
+        $this->wordpressSiteUrl = $wordpressSiteUrl;
     }
 
     public function salt($key)

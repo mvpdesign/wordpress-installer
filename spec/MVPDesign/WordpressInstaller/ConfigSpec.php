@@ -73,6 +73,30 @@ class ConfigSpec extends ObjectBehavior
         $this->environment()->shouldEqual('development');
     }
 
+    public function it_should_return_a_wordpress_home()
+    {
+        $this->wordpressHome();
+    }
+
+    public function it_should_set_a_wordpress_home()
+    {
+        $this->setWordpressHome('http://localhost');
+
+        $this->wordpressHome()->shouldEqual('http://localhost');
+    }
+
+    public function it_should_return_a_wordpress_site_url()
+    {
+        $this->wordpressSiteUrl();
+    }
+
+    public function it_should_set_a_wordpress_site_url()
+    {
+        $this->setWordpressSiteUrl('http://localhost/wp');
+
+        $this->wordpressSiteUrl()->shouldEqual('http://localhost/wp');
+    }
+
     public function it_should_return_salts()
     {
         $this->salts();
