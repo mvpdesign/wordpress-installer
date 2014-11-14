@@ -5,4 +5,5 @@
 .idea
 
 # Vendor (e.g. Composer)
+vendor
 composer.lock
