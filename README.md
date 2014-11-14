@@ -1,0 +1,4 @@
+wordpress-installer
+===================
+
+WordPress installer
