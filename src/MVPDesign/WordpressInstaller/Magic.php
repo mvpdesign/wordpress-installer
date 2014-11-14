@@ -45,13 +45,11 @@ class Magic
 		$root = dirname(dirname(dirname(__DIR__)));
 		$env_file = "{$root}/.env";
 
-		if (copy("{$root}/.env.example", $env_file)) {
-		    file_put_contents($env_file, implode($config->generate(), "\n"), FILE_APPEND | LOCK_EX);
+        $config = $config->generate();
 
-		} else {
-		    $io->write("<error>An error occured while copying your .env file</error>");
-		   	return 1;
-		}
+        file_put_contents($env_file, implode("\n", array_map(function ($v, $k) {
+            return $k . '=' . $v;
+        }, $config, array_keys($config))), FILE_APPEND | LOCK_EX);
 	}
 
 	public static function generateSalt($length = 64)
