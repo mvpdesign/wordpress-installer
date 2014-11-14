@@ -2,6 +2,7 @@
 
 namespace spec\MVPDesign\WordpressInstaller;
 
+use PhpSpec\IO\IOInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -40,6 +41,12 @@ class MagicSpec extends ObjectBehavior
         $this->askQuestions($io)->shouldReturnAnInstanceOf('MVPDesign\WordpressInstaller\Config');
     }
 
+    /*
+     * From the bachelor pad to the family household.
+     * We need to be prepared for any type of environment.
+     *
+     * @method createEnvironment
+     */
 
     /*
      * Extra Salty generation
