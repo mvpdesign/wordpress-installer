@@ -16,9 +16,28 @@ class MagicSpec extends ObjectBehavior
         ];
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('MVPDesign\WordpressInstaller\Magic');
+    }
+
+    /*
+     * How are you suppose to get anywhere without help?
+     *
+     * @method askQuestions
+     */
+
+    public function it_should_ask_questions()
+    {
+        //$this->askQuestions()->shouldBeCalled();
+    }
+
+    public function it_should_return_answers_to_our_questions(IOInterface $io)
+    {
+        $io->askConfirmation()->shouldBeCalled();
+        $io->askConfirmation("", true)->willReturn(true);
+
+        $this->askQuestions($io)->shouldReturnAnInstanceOf('MVPDesign\WordpressInstaller\Config');
     }
 
 
@@ -28,19 +47,19 @@ class MagicSpec extends ObjectBehavior
      * @method generateSalt
      */
 
-    function it_should_generate_a_salt()
+    public function it_should_generate_a_salt()
     {
         $this->generateSalt()->shouldBeString();
     }
 
-    function it_should_generate_a_random_salt()
+    public function it_should_generate_a_random_salt()
     {
         $salt1 = $this->generateSalt();
 
         $this->generateSalt()->shouldNotBeEqualTo($salt1);
     }
 
-    function it_should_generate_a_salt_with_the_specified_length()
+    public function it_should_generate_a_salt_with_the_specified_length()
     {
         $this->generateSalt(8)->shouldHaveLength(8);
         $this->generateSalt(16)->shouldHaveLength(16);
