@@ -1,0 +1,31 @@
+{
+    "name": "mvpdesign/wordpress-installer",
+    "description": "WordPress installer",
+    "keywords": [
+        "wordpress", "installer", "composer"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brock Riemenschneider",
+            "email": "brock@mvpdesign.com",
+            "homepage": "https://github.com/BsWiM"
+        },
+        {
+            "name": "Chris Wilson",
+            "email": "chrisw@mvpdesign.com",
+            "homepage": "https://github.com/heychris"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.4",
+        "symfony/yaml": "2.5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "MVPDesign\\WordpressInstaller": ""
+        }
+    },
+    "target-dir": "MVPDesign/WordpressInstaller"
+}
