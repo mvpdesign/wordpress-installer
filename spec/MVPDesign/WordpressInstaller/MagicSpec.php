@@ -2,7 +2,9 @@
 
 namespace spec\MVPDesign\WordpressInstaller;
 
-use PhpSpec\IO\IOInterface;
+use MVPDesign\WordpressInstaller\Magic;
+use Composer\Script\Event;
+use Composer\IO\IOInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -22,37 +24,10 @@ class MagicSpec extends ObjectBehavior
         $this->shouldHaveType('MVPDesign\WordpressInstaller\Magic');
     }
 
-    /*
-     * How are you suppose to get anywhere without help?
-     *
-     * @method askQuestions
-     */
-
-    public function it_should_ask_questions()
-    {
-        //$this->askQuestions()->shouldBeCalled();
-    }
-
     public function it_should_return_answers_to_our_questions(IOInterface $io)
     {
-        $io->askConfirmation()->shouldBeCalled();
-        $io->askConfirmation("", true)->willReturn(true);
-
         $this->askQuestions($io)->shouldReturnAnInstanceOf('MVPDesign\WordpressInstaller\Config');
     }
-
-    /*
-     * From the bachelor pad to the family household.
-     * We need to be prepared for any type of environment.
-     *
-     * @method createEnvironment
-     */
-
-    /*
-     * Extra Salty generation
-     * 
-     * @method generateSalt
-     */
 
     public function it_should_generate_a_salt()
     {
