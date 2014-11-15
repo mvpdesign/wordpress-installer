@@ -18,13 +18,18 @@
             "homepage": "https://github.com/heychris"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/composer/composer"
+        }
+    ],
     "require-dev": {
         "phpspec/phpspec": "~2.0"
     },
     "require": {
         "php": ">=5.3.4",
-        "composer/composer": "1.0.0-alpha8",
-        "symfony/yaml": "2.5.6"
+        "composer/composer": "1.0.0-alpha8"
     },
     "config": {
         "bin-dir": "bin",
