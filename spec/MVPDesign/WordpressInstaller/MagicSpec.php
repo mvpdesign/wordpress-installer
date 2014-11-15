@@ -2,6 +2,8 @@
 
 namespace spec\MVPDesign\WordpressInstaller;
 
+use Composer\Composer;
+use Composer\IO\IOInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -16,31 +18,29 @@ class MagicSpec extends ObjectBehavior
         ];
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('MVPDesign\WordpressInstaller\Magic');
     }
 
+    public function it_should_return_answers_to_our_questions(IOInterface $io, Composer $composer)
+    {
+        $this->askQuestions($io, $composer)->shouldReturnAnInstanceOf('MVPDesign\WordpressInstaller\Config');
+    }
 
-    /*
-     * Extra Salty generation
-     * 
-     * @method generateSalt
-     */
-
-    function it_should_generate_a_salt()
+    public function it_should_generate_a_salt()
     {
         $this->generateSalt()->shouldBeString();
     }
 
-    function it_should_generate_a_random_salt()
+    public function it_should_generate_a_random_salt()
     {
         $salt1 = $this->generateSalt();
 
         $this->generateSalt()->shouldNotBeEqualTo($salt1);
     }
 
-    function it_should_generate_a_salt_with_the_specified_length()
+    public function it_should_generate_a_salt_with_the_specified_length()
     {
         $this->generateSalt(8)->shouldHaveLength(8);
         $this->generateSalt(16)->shouldHaveLength(16);
