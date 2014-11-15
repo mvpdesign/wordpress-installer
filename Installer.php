@@ -1,5 +1,7 @@
 <?php
 
+namespace MVPDesign\WordpressInstaller;
+
 use MVPDesign\WordpressInstaller\Magic;
 use Composer\Script\Event;
 
