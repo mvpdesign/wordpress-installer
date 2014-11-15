@@ -3,96 +3,206 @@
 namespace MVPDesign\WordpressInstaller;
 
 class Config
-{
-    private $databaseName;
-    private $databaseUser;
-    private $databasePassword;
-    private $databaseHost;
+{   
+
+    /**
+     * dbName
+     *
+     * @var string
+     */
+    private $dbName;
+
+    /**
+     * dbUser
+     *
+     * @var string
+     */
+    private $dbUser;
+
+    /**
+     * dbPassword
+     *
+     * @var string
+     */
+    private $dbPassword;
+
+    /**
+     * dbHost
+     *
+     * @var string
+     */
+    private $dbHost;
+
+    /**
+     * environment
+     *
+     * @var string
+     */
     private $environment;
-    private $wordpressHome;
-    private $wordpressSiteUrl;
+
+    /**
+     * siteUrl
+     *
+     * @var string
+     */
+    private $siteUrl;
+
+    /**
+     * salts
+     *
+     * @var arrray
+     */
     private $salts = array(
-        'AUTH_KEY' => null,
-        'SECURE_AUTH_KEY' => null,
-        'LOGGED_IN_KEY' => null,
-        'NONCE_KEY' => null,
-        'AUTH_SALT' => null,
+        'AUTH_KEY'         => null,
+        'SECURE_AUTH_KEY'  => null,
+        'LOGGED_IN_KEY'    => null,
+        'NONCE_KEY'        => null,
+        'AUTH_SALT'        => null,
         'SECURE_AUTH_SALT' => null,
-        'LOGGED_IN_SALT' => null,
-        'NONCE_SALT' => null
+        'LOGGED_IN_SALT'   => null,
+        'NONCE_SALT'       => null
     );
 
-    public function databaseName()
+    /**
+     * getDbName
+     *
+     * @return string
+     */
+    public function getDbName()
     {
-        return $this->databaseName;
+        return $this->dbName;
     }
 
-    public function setDatabaseName($databaseName)
+    /**
+     * setDbName
+     *
+     * @param string $dbName Database name
+     *
+     * @return void
+     */
+    public function setDbName($dbName)
     {
-        $this->databaseName = $databaseName;
+        $this->dbName = $dbName;
     }
 
-    public function databaseUser()
+    /**
+     * getDbUser
+     *
+     * @return string
+     */
+    public function getDbUser()
     {
-        return $this->databaseUser;
+        return $this->dbUser;
     }
 
-    public function setDatabaseUser($databaseUser)
+    /**
+     * setDbUser
+     *
+     * @param string $dbUser Database user
+     *
+     * @return void
+     */
+    public function setDbUser($dbUser)
     {
-        $this->databaseUser = $databaseUser;
+        $this->dbUser = $dbUser;
     }
 
-    public function databasePassword()
+    /**
+     * getDbPassword
+     *
+     * @return string
+     */
+    public function getDbPassword()
     {
-        return $this->databasePassword;
+        return $this->dbPassword;
     }
 
-    public function setDatabasePassword($databasePassword)
+    /**
+     * setDbPassword
+     *
+     * @param string $dbPassword Database password
+     *
+     * @return void
+     */
+    public function setDbPassword($dbPassword)
     {
-        $this->databasePassword = $databasePassword;
+        $this->dbPassword = $dbPassword;
     }
 
-    public function databaseHost()
+    /**
+     * getDbHost
+     *
+     * @return string
+     */
+    public function getDbHost()
     {
-        return $this->databaseHost;
+        return $this->dbHost;
     }
 
-    public function setDatabaseHost($databaseHost)
+    /**
+     * setDbHost
+     *
+     * @param string $dbHost Database host
+     *
+     * @return void
+     */
+    public function setDbHost($dbHost = 'localhost')
     {
-        $this->databaseHost = $databaseHost;
+        $this->dbHost = $dbHost;
     }
 
-    public function environment()
+    /**
+     * getEnvironment
+     *
+     * @return string
+     */
+    public function getEnvironment()
     {
         return $this->environment;
     }
 
-    public function setEnvironment($environment)
+    /**
+     * setEnvironment
+     *
+     * @param string $environment Environment variable
+     *
+     * @return void
+     */
+    public function setEnvironment($environment = 'production')
     {
         $this->environment = $environment;
     }
 
-    public function wordpressHome()
+    /**
+     * getSiteUrl
+     *
+     * @return string
+     */
+    public function getSiteUrl()
     {
-        return $this->wordpressHome;
+        return $this->siteUrl;
     }
 
-    public function setWordpressHome($wordpressHome)
+    /**
+     * setSiteUrl
+     *
+     * @param string $url Site url
+     *
+     * @return void
+     */
+    public function setSiteUrl($url)
     {
-        $this->wordpressHome = $wordpressHome;
+        $this->siteUrl = $url;
     }
 
-    public function wordpressSiteUrl()
-    {
-        return $this->wordpressSiteUrl;
-    }
-
-    public function setWordpressSiteUrl($wordpressSiteUrl)
-    {
-        $this->wordpressSiteUrl = $wordpressSiteUrl;
-    }
-
-    public function salt($key)
+    /**
+     * getSalt
+     *
+     * @param string $key Salt key
+     *
+     * @return string
+     */
+    public function getSalt($key)
     {
         if ( ! array_key_exists($key, $this->salts)) {
             return false;
@@ -101,6 +211,14 @@ class Config
         return $this->salts[$key];
     }
 
+    /**
+     * setSalt
+     *
+     * @param string $key Salt key
+     * @param string $value Salt value
+     *
+     * @return void
+     */
     public function setSalt($key, $value)
     {
         if ( ! array_key_exists($key, $this->salts)) {
@@ -110,22 +228,32 @@ class Config
         $this->salts[$key] = $value;
     }
 
-    public function salts()
+    /**
+     * getSalts
+     *
+     * @return string
+     */
+    public function getSalts()
     {
         return $this->salts;
     }
 
+    /**
+     * generate
+     *
+     * @return array
+     */
     public function generate()
     {
         $config = array(
-            'DB_NAME'     => $this->databaseName(),
-            'DB_USER'     => $this->databaseUser(),
-            'DB_PASSWORD' => $this->databasePassword(),
-            'DB_HOST'     => $this->databaseHost(),
-            'WP_ENV'      => $this->environment()
+            'DB_NAME'     => $this->getDbName(),
+            'DB_USER'     => $this->getDbUser(),
+            'DB_PASSWORD' => $this->getDbPassword(),
+            'DB_HOST'     => $this->getDbHost(),
+            'WP_ENV'      => $this->getEnvironment()
         );
 
-        foreach ($this->salts() as $key => $value) {
+        foreach ($this->getSalts() as $key => $value) {
             $config[$key] = $value;
         }
 

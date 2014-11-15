@@ -28,12 +28,12 @@ class Magic
 		$generate_salts = $io->askConfirmation('<info>Generate salts?</info> [<comment>Y,n</comment>]?', true);
 
         $config = new Config;
-        $config->setDatabaseName($db_name);
-		$config->setDatabaseUser($db_user);
-		$config->setDatabasePassword($db_password);
-		$config->setDatabaseHost($db_host);
+        $config->setDbName($db_name);
+		$config->setDbUser($db_user);
+		$config->setDbPassword($db_password);
+		$config->setDbHost($db_host);
 		$config->setEnvironment($wp_env);
-        foreach($config->salts() as $salt_key => $salt_value){
+        foreach($config->getSalts() as $salt_key => $salt_value){
             $config->setSalt($salt_key, Magic::generateSalt());
         }
 

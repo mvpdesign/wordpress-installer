@@ -15,110 +15,98 @@ class ConfigSpec extends ObjectBehavior
 
     public function it_should_return_a_database_name()
     {
-        $this->databaseName();
+        $this->getDbName();
     }
 
     public function it_should_set_a_database_name()
     {
-        $this->setDatabaseName('name');
+        $this->setDbName('name');
 
-        $this->databaseName()->shouldEqual('name');
+        $this->getDbName()->shouldEqual('name');
     }
 
     public function it_should_return_a_database_user()
     {
-        $this->databaseUser();
+        $this->getDbUser();
     }
 
     public function it_should_set_a_database_user()
     {
-        $this->setDatabaseUser('user');
+        $this->setDbUser('user');
 
-        $this->databaseUser()->shouldEqual('user');
+        $this->getDbUser()->shouldEqual('user');
     }
 
     public function it_should_return_a_database_password()
     {
-        $this->databasePassword();
+        $this->getDbPassword();
     }
 
     public function it_should_set_a_database_password()
     {
-        $this->setDatabasePassword('password');
+        $this->setDbPassword('password');
 
-        $this->databasePassword()->shouldEqual('password');
+        $this->getDbPassword()->shouldEqual('password');
     }
 
     public function it_should_return_a_database_host()
     {
-        $this->databaseHost();
+        $this->getDbHost();
     }
 
     public function it_should_set_a_database_host()
     {
-        $this->setDatabaseHost('localhost');
+        $this->setDbHost('localhost');
 
-        $this->databaseHost()->shouldEqual('localhost');
+        $this->getDbHost()->shouldEqual('localhost');
     }
 
     public function it_should_return_a_environment()
     {
-        $this->environment();
+        $this->getEnvironment();
     }
 
     public function it_should_set_a_environment()
     {
         $this->setEnvironment('development');
 
-        $this->environment()->shouldEqual('development');
+        $this->getEnvironment()->shouldEqual('development');
     }
 
-    public function it_should_return_a_wordpress_home()
+    public function it_should_return_a_site_url()
     {
-        $this->wordpressHome();
+        $this->getSiteUrl();
     }
 
-    public function it_should_set_a_wordpress_home()
+    public function it_should_set_a_site_url()
     {
-        $this->setWordpressHome('http://localhost');
+        $this->setSiteUrl('http://localhost');
 
-        $this->wordpressHome()->shouldEqual('http://localhost');
-    }
-
-    public function it_should_return_a_wordpress_site_url()
-    {
-        $this->wordpressSiteUrl();
-    }
-
-    public function it_should_set_a_wordpress_site_url()
-    {
-        $this->setWordpressSiteUrl('http://localhost/wp');
-
-        $this->wordpressSiteUrl()->shouldEqual('http://localhost/wp');
+        $this->getSiteUrl()->shouldEqual('http://localhost');
     }
 
     public function it_should_return_salts()
     {
-        $this->salts();
+        $this->getSalts();
     }
 
     public function it_should_return_salts_as_an_array()
     {
-        $this->salts()->shouldBeArray();
+        $this->getSalts()->shouldBeArray();
     }
 
     public function it_should_set_a_salt()
     {
         $this->setSalt('AUTH_KEY', 'iAmAreallyRandomSalt');
 
-        $this->salt('AUTH_KEY')->shouldEqual('iAmAreallyRandomSalt');
+        $this->getSalt('AUTH_KEY')->shouldEqual('iAmAreallyRandomSalt');
     }
 
     public function it_should_not_set_salts_for_keys_that_do_not_exit()
     {
         $this->setSalt('TEST', 'iAmAreallyRandomSalt');
 
-        $this->salt('TEST')->shouldEqual(false);
+        $this->getSalt('TEST')->shouldEqual(false);
     }
 
     public function it_should_generate_an_array()
