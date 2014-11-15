@@ -23,7 +23,7 @@
     },
     "require": {
         "php": ">=5.3.4",
-        "composer/composer": "1.0.0-alpha8"
+        "composer/composer": "1.0.*@dev"
     },
     "config": {
         "bin-dir": "bin",
