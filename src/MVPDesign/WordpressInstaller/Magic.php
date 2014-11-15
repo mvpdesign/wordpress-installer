@@ -2,6 +2,7 @@
 
 namespace MVPDesign\WordpressInstaller;
 
+use Composer\Composer;
 use Composer\Script\Event;
 use Composer\IO\IOInterface;
 use MVPDesign\WordpressInstaller\Config;
@@ -18,8 +19,10 @@ class Magic
      */
     public static function happens(Event $event)
     {
-        $io           = $event->getIO();
-        $magicAnswers = Magic::askQuestions($io);
+        $io       = $event->getIO();
+        $composer = $event->getComposer();
+
+        $magicAnswers = Magic::askQuestions($io, $composer);
         $answers      = $magicAnswers->generate();
         
         Magic::createEnvironment($answers);
@@ -29,31 +32,44 @@ class Magic
      * askQuestions
      *
      * @param IOInterface $io Composer io interface
+     * @param Composer $composer Composer
      *
      * @return Config
      */
-    public static function askQuestions(IOInterface $io)
+    public static function askQuestions(IOInterface $io, Composer $composer)
     {
-        $config = new Config;
+        $config   = new Config;
+        $defaults = array(
+            'dbName'        => 'wordpress',
+            'dbUser'        => 'wordpress',
+            'dbHost'        => 'localhost',
+            'environment'   => 'development',
+            'generateSalts' => 'y'
+        );
 
-        if ( ! $io->isInteractive()) {
-            return $config;
+        if($io->isInteractive()){
+            $dbName        = $io->ask('<info>Database name</info> [<comment>' . $defaults['dbName'] . '</comment>]:', $defaults['dbName']);
+            $dbUser        = $io->ask('<info>Database user</info> [<comment>' . $defaults['dbUser'] . '</comment>]:', $defaults['dbUser']);
+            $dbPassword    = $io->ask('<info>Database password</info>:', '');
+            $dbHost        = $io->ask('<info>Database host</info> [<comment>' . $defaults['dbHost'] . '</comment>]:', $defaults['dbHost']);
+            $environment   = $io->ask('<info>Environment</info> [<comment>' . $defaults['environment'] . '</comment>]:', $defaults['environment']);
+            $generateSalts = $io->askConfirmation('<info>Generate salts?</info> [<comment>' . $defaults['generateSalts'] . '</comment>]:', $defaults['generateSalts'] == 'n' ? false : true);
+
+            $config->setDbName($dbName);
+            $config->setDbUser($dbUser);
+            $config->setDbPassword($dbPassword);
+            $config->setDbHost($dbHost);
+            $config->setEnvironment($environment);
+        } else {
+            $composerConfig = $composer->getConfig();
+            $generateSalts  = $defaults['generateSalts'] == 'n' ? false : true;
+
+            if($composerConfig){
+                $generateSalts = $composerConfig->get('generate-salts');
+            }
         }
 
-        $dbName        = $io->ask('Database Name?');
-        $dbUser        = $io->ask('Database User?');
-        $dbPassword    = $io->ask('Database Password?');
-        $dbHost        = $io->ask('Database Host?');
-        $environment   = $io->askConfirmation('<info>What is the environment</info> [<comment>development</comment>]?', 'development');
-        $generateSalts = $io->askConfirmation('<info>Generate salts?</info> [<comment>Y,n</comment>]?', true);
-
-        $config->setDbName($dbName);
-        $config->setDbUser($dbUser);
-        $config->setDbPassword($dbUser);
-        $config->setDbHost($dbHost);
-        $config->setEnvironment($environment);
-
-        if ( $generateSalts ) {
+        if($generateSalts){
             foreach($config->getSalts() as $salt_key => $salt_value){
                 $config->setSalt($salt_key, Magic::generateSalt());
             }
@@ -76,7 +92,7 @@ class Magic
 
         file_put_contents($env_file, implode("\n", array_map(function ($v, $k) {
             return $k . '=' . $v;
-        }, $config, array_keys($config))), FILE_APPEND | LOCK_EX);
+        }, $config, array_keys($config))), LOCK_EX);
     }
 
     /**

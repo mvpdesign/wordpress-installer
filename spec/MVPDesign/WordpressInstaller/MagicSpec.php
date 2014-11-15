@@ -2,8 +2,7 @@
 
 namespace spec\MVPDesign\WordpressInstaller;
 
-use MVPDesign\WordpressInstaller\Magic;
-use Composer\Script\Event;
+use Composer\Composer;
 use Composer\IO\IOInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -24,9 +23,9 @@ class MagicSpec extends ObjectBehavior
         $this->shouldHaveType('MVPDesign\WordpressInstaller\Magic');
     }
 
-    public function it_should_return_answers_to_our_questions(IOInterface $io)
+    public function it_should_return_answers_to_our_questions(IOInterface $io, Composer $composer)
     {
-        $this->askQuestions($io)->shouldReturnAnInstanceOf('MVPDesign\WordpressInstaller\Config');
+        $this->askQuestions($io, $composer)->shouldReturnAnInstanceOf('MVPDesign\WordpressInstaller\Config');
     }
 
     public function it_should_generate_a_salt()
