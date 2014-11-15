@@ -30,9 +30,8 @@
         "generate-salts": true
     },
     "autoload": {
-        "psr-0": {
-            "MVPDesign\\WordpressInstaller": ""
+        "psr-4": {
+            "MVPDesign\\WordpressInstaller\\": "src/MVPDesign/WordpressInstaller/"
         }
-    },
-    "target-dir": "MVPDesign/WordpressInstaller"
+    }
 }
