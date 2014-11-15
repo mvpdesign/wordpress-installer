@@ -34,10 +34,8 @@
     },
     "autoload": {
         "psr-0": {
-            "": "src"
+            "MVPDesign\\WordpressInstaller": ""
         },
-        "psr-4": {
-            "": ""
-        }
-    }
+    },
+    "target-dir": "MVPDesign/WordpressInstaller"
 }
