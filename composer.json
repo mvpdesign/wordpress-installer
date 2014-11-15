@@ -29,9 +29,6 @@
         "bin-dir": "bin",
         "generate-salts": true
     },
-    "scripts": {
-        "post-root-package-install": ["Installer::run"]
-    },
     "autoload": {
         "psr-0": {
             "MVPDesign\\WordpressInstaller": ""
