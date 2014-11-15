@@ -40,20 +40,23 @@ class Magic
 			return $config;
 		}
 
-		$dbName     = $io->ask('Database Name?');
-		$dbUser     = $io->ask('Database User?');
-		$dbPassword = $io->ask('Database Password?');
-		$db_host     = $io->ask('Database Host?');
-		$wp_env      = $io->askConfirmation('<info>What is the environment</info> [<comment>development</comment>]?', 'development');
-		$generate_salts = $io->askConfirmation('<info>Generate salts?</info> [<comment>Y,n</comment>]?', true);
+		$dbName        = $io->ask('Database Name?');
+		$dbUser        = $io->ask('Database User?');
+		$dbPassword    = $io->ask('Database Password?');
+		$dbHost        = $io->ask('Database Host?');
+		$environment   = $io->askConfirmation('<info>What is the environment</info> [<comment>development</comment>]?', 'development');
+		$generateSalts = $io->askConfirmation('<info>Generate salts?</info> [<comment>Y,n</comment>]?', true);
 
-        $config->setDbName($db_name);
-		$config->setDbUser($db_user);
-		$config->setDbPassword($db_password);
-		$config->setDbHost($db_host);
-		$config->setEnvironment($wp_env);
-        foreach($config->getSalts() as $salt_key => $salt_value){
-            $config->setSalt($salt_key, Magic::generateSalt());
+        $config->setDbName($dbName);
+		$config->setDbUser($dbUser);
+		$config->setDbPassword($dbUser);
+		$config->setDbHost($dbHost);
+		$config->setEnvironment($environment);
+
+		if ( $generateSalts ) {
+	        foreach($config->getSalts() as $salt_key => $salt_value){
+	            $config->setSalt($salt_key, Magic::generateSalt());
+        	}
         }
 
 		return $config;
