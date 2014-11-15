@@ -19,11 +19,11 @@
         }
     ],
     "require-dev": {
-        "phpspec/phpspec": "~2.0"
+        "phpspec/phpspec": "~2.0",
+        "composer/composer": "1.0.*@dev"
     },
     "require": {
-        "php": ">=5.3.4",
-        "composer/composer": "1.0.*@dev"
+        "php": ">=5.3.4"
     },
     "config": {
         "bin-dir": "bin",
