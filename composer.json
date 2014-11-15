@@ -18,12 +18,6 @@
             "homepage": "https://github.com/heychris"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/composer/composer"
-        }
-    ],
     "require-dev": {
         "phpspec/phpspec": "~2.0"
     },
@@ -33,7 +27,6 @@
     },
     "config": {
         "bin-dir": "bin",
-        "preferred-install": "dist",
         "generate-salts": true
     },
     "scripts": {
