@@ -50,7 +50,7 @@ class Config
     /**
      * salts
      *
-     * @var arrray
+     * @var array
      */
     private $salts = array(
         'AUTH_KEY'         => null,
