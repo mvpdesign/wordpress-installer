@@ -44,21 +44,24 @@ class Magic
             'dbUser'        => 'wordpress',
             'dbHost'        => 'localhost',
             'environment'   => 'development',
+            'siteUrl'       => 'http://localhost',
             'generateSalts' => 'y'
         );
 
         if($io->isInteractive()){
-            $dbName        = $io->ask('<info>Database name</info> [<comment>' . $defaults['dbName'] . '</comment>]:', $defaults['dbName']);
-            $dbUser        = $io->ask('<info>Database user</info> [<comment>' . $defaults['dbUser'] . '</comment>]:', $defaults['dbUser']);
+            $dbName        = $io->ask('<info>Database name</info> [<comment>' . $defaults['dbName'] . '</comment>]: ', $defaults['dbName']);
+            $dbUser        = $io->ask('<info>Database user</info> [<comment>' . $defaults['dbUser'] . '</comment>]: ', $defaults['dbUser']);
             $dbPassword    = $io->ask('<info>Database password</info>:', '');
-            $dbHost        = $io->ask('<info>Database host</info> [<comment>' . $defaults['dbHost'] . '</comment>]:', $defaults['dbHost']);
-            $environment   = $io->ask('<info>Environment</info> [<comment>' . $defaults['environment'] . '</comment>]:', $defaults['environment']);
-            $generateSalts = $io->askConfirmation('<info>Generate salts?</info> [<comment>' . $defaults['generateSalts'] . '</comment>]:', $defaults['generateSalts'] == 'n' ? false : true);
+            $dbHost        = $io->ask('<info>Database host</info> [<comment>' . $defaults['dbHost'] . '</comment>]: ', $defaults['dbHost']);
+            $environment   = $io->ask('<info>Environment</info> [<comment>' . $defaults['environment'] . '</comment>]: ', $defaults['environment']);
+            $siteUrl       = $io->ask('<info>Site URL</info> [<comment>' . $defaults['siteUrl'] . '</comment>]: ', $defaults['siteUrl']);
+            $generateSalts = $io->askConfirmation('<info>Generate salts?</info> [<comment>' . $defaults['generateSalts'] . '</comment>]: ', $defaults['generateSalts'] == 'n' ? false : true);
 
             $config->setDbName($dbName);
             $config->setDbUser($dbUser);
             $config->setDbPassword($dbPassword);
             $config->setDbHost($dbHost);
+            $config->setSiteUrl($siteUrl);
             $config->setEnvironment($environment);
         } else {
             $composerConfig = $composer->getConfig();

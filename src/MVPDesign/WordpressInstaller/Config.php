@@ -252,7 +252,7 @@ class Config
             'DB_HOST'     => $this->getDbHost(),
             'WP_ENV'      => $this->getEnvironment(),
             'WP_HOME'     => $this->getSiteUrl(),
-            'WP_SITE_URL' => $this->getSiteUrl()
+            'WP_SITEURL'  => $this->getSiteUrl()
         );
 
         foreach ($this->getSalts() as $key => $value) {
