@@ -51,7 +51,7 @@ class Magic
         if($io->isInteractive()){
             $dbName        = $io->ask('<info>Database name</info> [<comment>' . $defaults['dbName'] . '</comment>]: ', $defaults['dbName']);
             $dbUser        = $io->ask('<info>Database user</info> [<comment>' . $defaults['dbUser'] . '</comment>]: ', $defaults['dbUser']);
-            $dbPassword    = $io->ask('<info>Database password</info>:', '');
+            $dbPassword    = $io->ask('<info>Database password</info>: ', '');
             $dbHost        = $io->ask('<info>Database host</info> [<comment>' . $defaults['dbHost'] . '</comment>]: ', $defaults['dbHost']);
             $environment   = $io->ask('<info>Environment</info> [<comment>' . $defaults['environment'] . '</comment>]: ', $defaults['environment']);
             $siteUrl       = $io->ask('<info>Site URL</info> [<comment>' . $defaults['siteUrl'] . '</comment>]: ', $defaults['siteUrl']);
