@@ -87,8 +87,7 @@ class Magic
      */
     public static function createEnvironment($config)
     {
-        $root = dirname(dirname(dirname(__DIR__)));
-        $env_file = "{$root}/.env";
+        $env_file = ".env";
 
         file_put_contents($env_file, implode("\n", array_map(function ($v, $k) {
             return $k . '=' . $v;
