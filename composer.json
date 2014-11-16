@@ -19,27 +19,19 @@
         }
     ],
     "require-dev": {
-        "phpspec/phpspec": "~2.0"
+        "phpspec/phpspec": "~2.0",
+        "composer/composer": "1.0.*@dev"
     },
     "require": {
-        "php": ">=5.3.4",
-        "composer/composer": "1.0.0-alpha8",
-        "symfony/yaml": "2.5.6"
+        "php": ">=5.3.4"
     },
     "config": {
         "bin-dir": "bin",
-        "preferred-install": "dist",
         "generate-salts": true
     },
-    "scripts": {
-        "post-root-package-install": ["Installer::run"]
-    },
     "autoload": {
-        "psr-0": {
-            "": "src"
-        },
         "psr-4": {
-            "": ""
+            "MVPDesign\\WordpressInstaller\\": "src/MVPDesign/WordpressInstaller/"
         }
     }
 }

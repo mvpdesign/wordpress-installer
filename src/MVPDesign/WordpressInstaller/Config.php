@@ -50,7 +50,7 @@ class Config
     /**
      * salts
      *
-     * @var arrray
+     * @var array
      */
     private $salts = array(
         'AUTH_KEY'         => null,
@@ -250,7 +250,9 @@ class Config
             'DB_USER'     => $this->getDbUser(),
             'DB_PASSWORD' => $this->getDbPassword(),
             'DB_HOST'     => $this->getDbHost(),
-            'WP_ENV'      => $this->getEnvironment()
+            'WP_ENV'      => $this->getEnvironment(),
+            'WP_HOME'     => $this->getSiteUrl(),
+            'WP_SITEURL'  => $this->getSiteUrl()
         );
 
         foreach ($this->getSalts() as $key => $value) {
