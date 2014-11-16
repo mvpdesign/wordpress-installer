@@ -11,11 +11,11 @@ class MagicSpec extends ObjectBehavior
 {
     public function getMatchers()
     {
-        return [
+        return array(
             'haveLength' => function($subject, $length) {
                 return strlen($subject) === $length;
             },
-        ];
+        );
     }
 
     public function it_is_initializable()
