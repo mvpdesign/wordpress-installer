@@ -19,12 +19,12 @@ class Magic
      */
     public static function happens(Event $event)
     {
-        $io       = $event->getIO();
+        $io = $event->getIO();
         $composer = $event->getComposer();
 
         $magicAnswers = Magic::askQuestions($io, $composer);
-        $answers      = $magicAnswers->generate();
-        
+        $answers = $magicAnswers->generate();
+
         Magic::createEnvironment($answers);
     }
 
@@ -38,7 +38,7 @@ class Magic
      */
     public static function askQuestions(IOInterface $io, Composer $composer)
     {
-        $config   = new Config;
+        $config = new Config;
         $defaults = array(
             'dbName'        => 'wordpress',
             'dbUser'        => 'wordpress',
@@ -48,14 +48,20 @@ class Magic
             'generateSalts' => 'y'
         );
 
-        if($io->isInteractive()){
-            $dbName        = $io->ask('<info>Database name</info> [<comment>' . $defaults['dbName'] . '</comment>]: ', $defaults['dbName']);
-            $dbUser        = $io->ask('<info>Database user</info> [<comment>' . $defaults['dbUser'] . '</comment>]: ', $defaults['dbUser']);
-            $dbPassword    = $io->ask('<info>Database password</info>: ', '');
-            $dbHost        = $io->ask('<info>Database host</info> [<comment>' . $defaults['dbHost'] . '</comment>]: ', $defaults['dbHost']);
-            $environment   = $io->ask('<info>Environment</info> [<comment>' . $defaults['environment'] . '</comment>]: ', $defaults['environment']);
-            $siteUrl       = $io->ask('<info>Site URL</info> [<comment>' . $defaults['siteUrl'] . '</comment>]: ', $defaults['siteUrl']);
-            $generateSalts = $io->askConfirmation('<info>Generate salts?</info> [<comment>' . $defaults['generateSalts'] . '</comment>]: ', $defaults['generateSalts'] == 'n' ? false : true);
+        if ($io->isInteractive()) {
+            $dbName = $io->ask('<info>Database name</info> [<comment>' . $defaults['dbName'] . '</comment>]: ',
+                $defaults['dbName']);
+            $dbUser = $io->ask('<info>Database user</info> [<comment>' . $defaults['dbUser'] . '</comment>]: ',
+                $defaults['dbUser']);
+            $dbPassword = $io->ask('<info>Database password</info>: ', '');
+            $dbHost = $io->ask('<info>Database host</info> [<comment>' . $defaults['dbHost'] . '</comment>]: ',
+                $defaults['dbHost']);
+            $environment = $io->ask('<info>Environment</info> [<comment>' . $defaults['environment'] . '</comment>]: ',
+                $defaults['environment']);
+            $siteUrl = $io->ask('<info>Site URL</info> [<comment>' . $defaults['siteUrl'] . '</comment>]: ',
+                $defaults['siteUrl']);
+            $generateSalts = $io->askConfirmation('<info>Generate salts?</info> [<comment>' . $defaults['generateSalts'] . '</comment>]: ',
+                $defaults['generateSalts'] == 'n' ? false : true);
 
             $config->setDbName($dbName);
             $config->setDbUser($dbUser);
@@ -65,15 +71,15 @@ class Magic
             $config->setEnvironment($environment);
         } else {
             $composerConfig = $composer->getConfig();
-            $generateSalts  = $defaults['generateSalts'] == 'n' ? false : true;
+            $generateSalts = $defaults['generateSalts'] == 'n' ? false : true;
 
-            if($composerConfig){
+            if ($composerConfig) {
                 $generateSalts = $composerConfig->get('generate-salts');
             }
         }
 
-        if($generateSalts){
-            foreach($config->getSalts() as $salt_key => $salt_value){
+        if ($generateSalts) {
+            foreach ($config->getSalts() as $salt_key => $salt_value) {
                 $config->setSalt($salt_key, Magic::generateSalt());
             }
         }
@@ -106,7 +112,7 @@ class Magic
      */
     public static function generateSalt($length = 64)
     {
-        $chars  = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $chars .= '!@#$%^&*()';
         $chars .= '-_ []{}<>~`+=,.;:/?|';
 

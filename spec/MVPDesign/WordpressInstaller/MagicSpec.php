@@ -12,7 +12,7 @@ class MagicSpec extends ObjectBehavior
     public function getMatchers()
     {
         return array(
-            'haveLength' => function($subject, $length) {
+            'haveLength' => function ($subject, $length) {
                 return strlen($subject) === $length;
             },
         );

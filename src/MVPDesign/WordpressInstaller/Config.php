@@ -3,7 +3,7 @@
 namespace MVPDesign\WordpressInstaller;
 
 class Config
-{   
+{
 
     /**
      * dbName
